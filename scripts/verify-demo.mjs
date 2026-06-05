@@ -26,10 +26,20 @@ for (const text of requiredText) {
   }
 }
 
-for (const assetPath of ["/demo/styles.css", "/demo/data.js", "/demo/app.js"]) {
-  if (!html.includes(assetPath)) {
-    fail(`Missing absolute asset reference in demo/index.html: ${assetPath}`);
+for (const loaderText of ["demoAssetBase", "__loadDemoScript__", "styles.css", "data.js", "app.js"]) {
+  if (!html.includes(loaderText)) {
+    fail(`Missing adaptive asset loader text in demo/index.html: ${loaderText}`);
   }
+}
+
+if (html.includes('src="/demo/app.js"') || html.includes('href="/demo/styles.css"')) {
+  fail("demo/index.html should not use static absolute demo asset paths; they break file:// local preview");
+}
+
+const localFileUrl = new URL("demo/index.html", `file://${root.endsWith("/") ? root : `${root}/`}`);
+const localStyleUrl = new URL("./styles.css", localFileUrl);
+if (!localStyleUrl.href.endsWith("/demo/styles.css")) {
+  fail(`file:// stylesheet path would resolve incorrectly: ${localStyleUrl.href}`);
 }
 
 const context = { window: {} };

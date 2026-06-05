@@ -4,7 +4,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AI 项目自治运营平台 Demo 1.0</title>
-    <link rel="stylesheet" href="/demo/styles.css">
+    <link id="demo-style" rel="stylesheet" href="./styles.css">
+    <script>
+      (function () {
+        function demoAssetBase() {
+          if (window.location.protocol === "file:") return "./";
+          if (window.location.pathname === "/demo" || window.location.pathname === "/demo/") return "/demo/";
+          return "./";
+        }
+
+        var assetBase = demoAssetBase();
+        var styleLink = document.getElementById("demo-style");
+        if (styleLink) styleLink.href = assetBase + "styles.css";
+
+        window.__DEMO_ASSET_BASE__ = assetBase;
+        window.__loadDemoScript__ = function loadDemoScript(fileName) {
+          return new Promise(function (resolve, reject) {
+            var script = document.createElement("script");
+            script.src = assetBase + fileName;
+            script.onload = resolve;
+            script.onerror = function () { reject(new Error("Demo script load failed: " + fileName)); };
+            document.body.appendChild(script);
+          });
+        };
+      })();
+    </script>
   </head>
   <body>
     <header class="app-header">
@@ -135,7 +159,27 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-    <script src="/demo/data.js"></script>
-    <script src="/demo/app.js"></script>
+    <script>
+      (function () {
+        function bootDemo() {
+          window.__loadDemoScript__("data.js")
+            .then(function () { return window.__loadDemoScript__("app.js"); })
+            .catch(function (error) {
+              var toast = document.getElementById("toast");
+              if (toast) {
+                toast.textContent = "Demo 资源加载失败，请检查 data.js / app.js 路径。";
+                toast.classList.add("show");
+              }
+              console.error(error);
+            });
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", bootDemo);
+        } else {
+          bootDemo();
+        }
+      })();
+    </script>
   </body>
 </html>
