@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AI 项目任务智能体工作台 Demo 2.0</title>
+    <title>AI 项目自治演示舱 Demo</title>
     <link rel="icon" href="data:,">
     <link id="demo-style" rel="stylesheet">
     <script>
@@ -32,103 +32,62 @@
     </script>
   </head>
   <body>
-    <main class="workbench-page" id="workbench-root">
-      <section class="hero-band" aria-label="AI 项目任务智能体工作台">
-        <nav class="top-glass-bar">
-          <div class="brand-lockup">
-            <p class="eyebrow">AI 黑客松 Demo 2.0</p>
-            <h1>AI 项目任务智能体工作台</h1>
-          </div>
-
-          <label class="scenario-search" for="scenario-selector">
-            <span>方案输入</span>
-            <select id="scenario-selector" aria-label="选择演示项目场景"></select>
-          </label>
-
-          <div class="top-actions">
-            <button class="ghost-button" id="reset-demo" type="button">重置</button>
-            <button class="primary-button" id="start-ai-analysis" type="button">开始 AI 分析</button>
-          </div>
-        </nav>
-
+    <main class="demo-shell" id="demo-root">
+      <section class="hero-panel" aria-label="AI 项目自治演示舱">
         <div class="hero-copy">
-          <p>把项目交付件、群聊、云文档和多系统原始数据，自动解析成风险、任务、催办和飞书周报。</p>
-          <div class="hero-metrics" id="hero-metrics"></div>
+          <p class="eyebrow">AI 黑客松 Demo V1.0</p>
+          <div class="hero-title-row">
+            <h1>AI 项目自治演示舱</h1>
+            <div class="analysis-workbench" id="analysis-workbench" aria-label="新建分析入库与分析历史"></div>
+          </div>
+          <p>一次点击，看清 AI 如何把多文档入库、风险解析、任务生成和问题跟进表串成可追踪闭环。</p>
         </div>
+        <div class="hero-metrics" id="hero-metrics"></div>
       </section>
 
-      <section class="workbench-grid" aria-label="AI 项目自治运营工作台">
-        <aside class="glass-panel input-panel">
-          <div class="panel-title">
-            <span class="panel-index">01</span>
+      <section class="flow-rail" id="flow-rail" aria-label="AI 自动演示流程"></section>
+
+      <section class="demo-grid">
+        <aside class="glass-card signal-panel">
+          <div class="section-head">
+            <span>01</span>
             <div>
               <p class="eyebrow">方案输入</p>
-              <h2>项目与原始信号</h2>
+              <h2>只看关键数据</h2>
             </div>
           </div>
-          <div id="scenario-brief"></div>
-          <div class="source-cloud" id="source-cloud"></div>
-          <div class="dimension-grid" id="dimension-grid"></div>
+          <div class="scenario-card" id="scenario-card"></div>
+          <div class="signal-strip" id="signal-strip"></div>
         </aside>
 
-        <section class="glass-panel ai-panel">
-          <div class="panel-title">
-            <span class="panel-index">02</span>
-            <div>
-              <p class="eyebrow">智能体数据解析</p>
-              <h2>AI 思考过程</h2>
-            </div>
+        <section class="glass-card ai-stage" id="ai-stage">
+          <div class="stage-orb" aria-hidden="true">
+            <span></span>
           </div>
-          <div class="ai-core">
-            <div class="orbital-core" aria-hidden="true"></div>
-            <div>
-              <strong id="ai-core-title">等待启动</strong>
-              <p id="ai-core-subtitle">点击开始后，AI 会按数据源、质量、进度、成本、节点风险逐步推理。</p>
-            </div>
+          <div class="stage-copy">
+            <p class="eyebrow" id="stage-kicker">等待启动</p>
+            <h2 id="stage-title">AI 尚未开始分析</h2>
+            <p id="stage-detail">点击下方按钮后，Demo 会自动跑完数据解析、AI 思考、任务生成和问题输出。</p>
           </div>
-          <div class="stage-list" id="ai-stage-list"></div>
-          <div class="thinking-feed" id="ai-thinking-feed"></div>
+          <div class="evidence-line" id="evidence-line">当前没有动作。唯一操作按钮会驱动整条演示流程。</div>
+          <div class="lark-notification-feed" id="lark-notification-feed" aria-live="polite"></div>
+          <button class="primary-action" id="primary-action" type="button">开始 AI 自动演示</button>
         </section>
-
-        <aside class="glass-panel output-panel">
-          <div class="panel-title">
-            <span class="panel-index">03</span>
-            <div>
-              <p class="eyebrow">任务闭环中枢</p>
-              <h2>生成、分发、质检、预警</h2>
-            </div>
-          </div>
-          <div class="task-distribution-panel" id="task-distribution-panel"></div>
-          <div class="deliverable-panel">
-            <div>
-              <strong>交付件质检</strong>
-              <p id="deliverable-status">等待责任人上传进展说明与交付件。</p>
-            </div>
-            <div class="deliverable-actions">
-              <button class="mini-button" id="deliverable-upload-button" type="button">一键上传</button>
-              <button class="mini-button danger" id="qa-reject-button" type="button">AI 建议打回</button>
-            </div>
-          </div>
-          <p class="output-hint">催办与上升预警</p>
-          <div class="escalation-feed" id="escalation-feed"></div>
-        </aside>
       </section>
 
-      <section class="lower-grid">
-        <article class="glass-panel report-panel" id="feishu-doc-panel" aria-label="飞书文档输出"></article>
-        <article class="glass-panel fit-panel">
-          <div class="panel-title">
-            <span class="panel-index">04</span>
-            <div>
-              <p class="eyebrow">评审适配</p>
-              <h2>参赛要求覆盖</h2>
-            </div>
+      <section class="glass-card result-card" id="result-card">
+        <div class="section-head">
+          <span>04</span>
+          <div>
+            <p class="eyebrow">问题输出</p>
+            <h2>等待生成列表</h2>
           </div>
-          <div id="contest-fit-grid"></div>
-        </article>
+        </div>
+        <div id="result-content"></div>
       </section>
     </main>
 
+    <div id="analysis-modal-root"></div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>

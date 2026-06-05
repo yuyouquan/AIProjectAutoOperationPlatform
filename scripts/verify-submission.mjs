@@ -48,33 +48,41 @@ function mustContain(file, texts) {
 ].forEach(([file, minBytes]) => mustExist(file, minBytes));
 
 mustContain("demo/index.html", [
-  "AI 项目任务智能体工作台",
+  "AI 项目自治演示舱",
   "方案输入",
-  "智能体数据解析",
-  "AI 思考过程",
-  "任务闭环中枢",
-  "交付件质检",
-  "催办与上升预警",
-  "飞书文档输出",
-  "参赛要求覆盖"
+  "只看关键数据",
+  "开始 AI 自动演示",
+  "数据解析",
+  "AI 思考",
+  "任务生成",
+  "问题输出"
 ]);
 
 mustContain("demo/data.js", [
-  "既有立项增量",
+  "tOS交付进展汇报W23",
+  "tOS17.0",
+  "47%",
+  "1% (30/330)",
+  "Note 60 Pro",
+  "Open 49",
+  "超期19",
+  "问题跟进列表",
+  "处理进展",
+  "完成时间",
   "业务价值",
   "可落地性",
   "SPUG/TOnes",
   "Trancare",
-  "AI 建议打回",
   "正式系统写回作为下一步集成"
 ]);
 
 mustContain("outputs/ai-project-autonomy-platform/submission-checklist.md", [
   "一页纸方案",
-  "Demo 2.0",
+  "Demo 3.0",
   "https://ai-project-auto-operation-platform.vercel.app",
   "团队简历",
   "立项情况",
+  "tOS交付进展汇报W23",
   "业务价值",
   "可落地性"
 ]);
