@@ -4,8 +4,8 @@ import vm from "node:vm";
 
 const root = process.cwd();
 const requiredFiles = ["index.html", "demo/index.html", "demo/styles.css", "demo/app.js", "demo/data.js"];
-const requiredText = ["数据源总览", "AI 推理链路", "节点风险雷达", "AI 任务生成", "自治跟踪看板", "周会报告输出", "参赛要求覆盖"];
-const requiredDataKeys = ["projects", "sources", "summaryMetrics", "aiTrace", "risks", "issueSummary", "contestFit"];
+const requiredText = ["AI 自动巡检演示台", "开始 AI 自动巡检", "飞书文档输出", "数据源总览", "AI 推理链路", "节点风险雷达", "AI 任务生成", "自治跟踪看板", "周会报告输出", "参赛要求覆盖"];
+const requiredDataKeys = ["projects", "sources", "summaryMetrics", "automationRun", "aiTrace", "risks", "issueSummary", "contestFit"];
 
 function fail(message) {
   console.error(message);
@@ -34,6 +34,10 @@ for (const loaderText of ["demoAssetBase", "__loadDemoScript__", "styles.css", "
 
 if (html.includes('src="/demo/app.js"') || html.includes('href="/demo/styles.css"')) {
   fail("demo/index.html should not use static absolute demo asset paths; they break file:// local preview");
+}
+
+if (html.includes('href="./styles.css"')) {
+  fail("demo/index.html should not use an initial ./styles.css href; /demo clean URLs request /styles.css before the adaptive loader runs");
 }
 
 const localFileUrl = new URL("demo/index.html", `file://${root.endsWith("/") ? root : `${root}/`}`);
@@ -71,11 +75,50 @@ const allChineseCopy = [
   fs.readFileSync(path.join(root, "demo/app.js"), "utf8"),
   fs.readFileSync(path.join(root, "demo/data.js"), "utf8")
 ].join("\n");
+const appSource = fs.readFileSync(path.join(root, "demo/app.js"), "utf8");
 
-for (const text of ["AI 项目自治运营平台", "模拟创建任务", "正式系统写回作为下一步集成", "既有立项增量", "业务价值", "可落地性"]) {
+for (const text of ["AI 项目自治运营平台", "开始 AI 自动巡检", "原始数据解析", "解析结果", "AI 思考过程", "决策输出", "模拟写入任务系统", "模拟创建任务", "正式系统写回作为下一步集成", "既有立项增量", "业务价值", "可落地性"]) {
   if (!allChineseCopy.includes(text)) {
     fail(`Missing required Chinese copy: ${text}`);
   }
+}
+
+if (!Array.isArray(demoData.automationRun?.steps) || demoData.automationRun.steps.length < 7) {
+  fail("Expected at least 7 AI auto-inspection steps");
+}
+
+for (const step of demoData.automationRun.steps) {
+  for (const field of ["rawData", "parsedData", "thinking", "decision"]) {
+    if (!step[field] || typeof step[field] !== "string") {
+      fail(`Automation step ${step.id || step.title} is missing ${field}`);
+    }
+  }
+}
+
+if (html.includes("runner-thinking-card")) {
+  fail("AI thinking process should be embedded inside inspection task logs, not shown as a separate runner-thinking-card module");
+}
+
+for (const logClass of ["log-thinking", "log-thinking-grid", "log-raw", "log-parsed", "log-reasoning", "log-decision"]) {
+  if (!appSource.includes(logClass)) {
+    fail(`Missing task-embedded AI thinking class in demo/app.js: ${logClass}`);
+  }
+}
+
+for (const domId of ["feishu-output-card", "feishu-output-status", "feishu-doc-title", "feishu-doc-blocks", "copy-feishu-doc-button"]) {
+  if (!html.includes(domId)) {
+    fail(`Missing Feishu document output DOM id: ${domId}`);
+  }
+}
+
+const stepMs = Number(appSource.match(/AUTO_RUN_STEP_MS\s*=\s*(\d+)/)?.[1] || 0);
+const completeMs = Number(appSource.match(/AUTO_RUN_COMPLETE_MS\s*=\s*(\d+)/)?.[1] || 0);
+if (stepMs < 1600 || completeMs < 900) {
+  fail(`AI auto-inspection timing is too fast for judge review: step=${stepMs}, complete=${completeMs}`);
+}
+
+if (!demoData.automationRun.feishuDocument || !Array.isArray(demoData.automationRun.feishuDocument.blocks) || demoData.automationRun.feishuDocument.blocks.length < 4) {
+  fail("Expected automationRun.feishuDocument with at least 4 report blocks");
 }
 
 if (!Array.isArray(demoData.aiTrace) || demoData.aiTrace.length < 5) {

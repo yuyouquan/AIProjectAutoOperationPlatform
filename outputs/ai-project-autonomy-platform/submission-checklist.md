@@ -5,7 +5,7 @@
 ## 报名提交物
 
 - 一页纸方案：已生成 `ai-project-autonomy-platform-onepage.pptx`。
-- Demo 1.0：已完成本地 HTML Demo，可交互演示风险到任务闭环。
+- Demo 1.0：已完成本地 HTML Demo，可通过“AI 自动巡检演示台”展示数据读取、风险判断、任务生成、模拟写入和报告输出闭环。
 - 线上 Demo：已发布到 `https://ai-project-auto-operation-platform.vercel.app`。
 - 团队简历：已准备模板 `submission-support/team-resume-template.md`，需补充真实成员姓名和角色。
 - 立项情况：已准备说明 `submission-support/project-status-statement.md`。

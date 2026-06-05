@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AI 项目自治运营平台 Demo 1.0</title>
-    <link id="demo-style" rel="stylesheet" href="./styles.css">
+    <link rel="icon" href="data:,">
+    <link id="demo-style" rel="stylesheet">
     <script>
       (function () {
         function demoAssetBase() {
@@ -57,11 +58,72 @@
       </aside>
       <div class="header-actions">
         <button class="ghost-button" id="copy-report-button" type="button">复制报告</button>
+        <a class="ghost-button" href="#auto-runner">演示巡检</a>
         <a class="primary-button" href="#task-agent">查看 AI 任务</a>
       </div>
     </header>
 
     <main>
+      <section class="section-shell runner-shell" id="auto-runner">
+        <div class="runner-hero">
+          <div>
+            <p class="eyebrow">AI Agent Demo</p>
+            <h2>AI 自动巡检演示台</h2>
+            <p id="runner-subtitle">点击开始后，AI 会自动读取多系统数据、判断节点风险、生成任务并输出周会报告。</p>
+          </div>
+          <div class="runner-actions">
+            <button class="primary-run-button" id="start-auto-run" type="button">开始 AI 自动巡检</button>
+            <button class="secondary-run-button" id="reset-auto-run" type="button">重置演示</button>
+          </div>
+        </div>
+
+        <div class="runner-layout">
+          <div class="runner-console">
+            <div class="runner-status">
+              <span class="live-dot"></span>
+              <strong id="runner-status-text">等待启动</strong>
+              <span id="runner-progress-text">0 / 8</span>
+            </div>
+            <div class="runner-progress">
+              <span id="runner-progress-bar"></span>
+            </div>
+            <div class="runner-log" id="runner-log"></div>
+            <div class="feishu-output-card" id="feishu-output-card">
+              <div class="feishu-output-head">
+                <span class="badge" id="feishu-output-status">等待飞书文档输出</span>
+                <strong>飞书文档输出</strong>
+              </div>
+              <div class="feishu-doc-preview">
+                <div class="feishu-doc-meta" id="feishu-doc-meta"></div>
+                <h3 id="feishu-doc-title">等待 AI 生成项目周会文档</h3>
+                <div class="feishu-doc-blocks" id="feishu-doc-blocks"></div>
+              </div>
+              <div class="feishu-output-actions">
+                <button class="small-button" id="copy-feishu-doc-button" type="button">复制飞书文档正文</button>
+                <span>正式集成后可自动创建 / 更新飞书 Docx</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="runner-side">
+            <div class="runner-focus" id="runner-focus-card">
+              <span class="badge">待启动</span>
+              <h3>AI 将自动替项目经理跑一遍巡检流程</h3>
+              <p>启动后可看到每一步读取了什么系统、命中了什么规则、生成了哪些任务。</p>
+            </div>
+            <div class="runner-outcomes" id="runner-outcomes"></div>
+          </aside>
+        </div>
+
+        <div class="runner-generated">
+          <div>
+            <h3>AI 生成的任务草稿</h3>
+            <p>任务字段会随着巡检推进自动补齐，并同步到下方任务看板。</p>
+          </div>
+          <div class="generated-task-grid" id="generated-task-grid"></div>
+        </div>
+      </section>
+
       <section class="section-shell" id="source-overview">
         <div class="section-title">
           <p class="eyebrow">Step 1</p>
