@@ -76,10 +76,67 @@ const allChineseCopy = [
   fs.readFileSync(path.join(root, "demo/data.js"), "utf8")
 ].join("\n");
 const appSource = fs.readFileSync(path.join(root, "demo/app.js"), "utf8");
+const cssSource = fs.readFileSync(path.join(root, "demo/styles.css"), "utf8");
 
 for (const text of ["AI 项目自治运营平台", "开始 AI 自动巡检", "原始数据解析", "解析结果", "AI 思考过程", "决策输出", "模拟写入任务系统", "模拟创建任务", "正式系统写回作为下一步集成", "既有立项增量", "业务价值", "可落地性"]) {
   if (!allChineseCopy.includes(text)) {
     fail(`Missing required Chinese copy: ${text}`);
+  }
+}
+
+const requiredWorkbenchText = [
+  "AI 项目任务智能体工作台",
+  "方案输入",
+  "智能体数据解析",
+  "AI 思考过程",
+  "任务闭环中枢",
+  "交付件质检",
+  "催办与上升预警",
+  "飞书文档输出",
+  "SPUG/TOnes",
+  "IPM",
+  "UTP",
+  "BOM",
+  "SAP",
+  "MES",
+  "MOM",
+  "QMS",
+  "CRM",
+  "Trancare"
+];
+
+for (const text of requiredWorkbenchText) {
+  if (!allChineseCopy.includes(text)) {
+    fail(`Missing redesigned workbench copy: ${text}`);
+  }
+}
+
+for (const domId of [
+  "workbench-root",
+  "scenario-selector",
+  "start-ai-analysis",
+  "ai-stage-list",
+  "ai-thinking-feed",
+  "task-distribution-panel",
+  "deliverable-upload-button",
+  "qa-reject-button",
+  "escalation-feed",
+  "feishu-doc-panel"
+]) {
+  if (!html.includes(domId)) {
+    fail(`Missing redesigned workbench DOM id: ${domId}`);
+  }
+}
+
+for (const key of ["scenarios", "systemSources", "analysisStages", "taskLoop", "reportOutputs"]) {
+  if (!(key in demoData)) {
+    fail(`Missing redesigned workbench data key: ${key}`);
+  }
+}
+
+for (const cssText of ["backdrop-filter", "--glass", "--aqua", "workbench-grid", "thinking-card"]) {
+  if (!cssSource.includes(cssText)) {
+    fail(`Missing glass workbench CSS token: ${cssText}`);
   }
 }
 
