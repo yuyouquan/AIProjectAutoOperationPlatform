@@ -26,9 +26,9 @@ for (const text of requiredText) {
   }
 }
 
-for (const scriptName of ["styles.css", "data.js", "app.js"]) {
-  if (!html.includes(scriptName)) {
-    fail(`Missing asset reference in demo/index.html: ${scriptName}`);
+for (const assetPath of ["/demo/styles.css", "/demo/data.js", "/demo/app.js"]) {
+  if (!html.includes(assetPath)) {
+    fail(`Missing absolute asset reference in demo/index.html: ${assetPath}`);
   }
 }
 
