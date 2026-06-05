@@ -76,6 +76,9 @@ async function runScenario(page, viewport, screenshotPath) {
     fail(`Elements overflow viewport on ${viewport.width}x${viewport.height}: ${state.badRects.join(", ")}`);
   }
 
+  await page.addStyleTag({
+    content: "*, *::before, *::after { animation: none !important; transition: none !important; caret-color: transparent !important; }"
+  });
   await page.screenshot({ path: screenshotPath, fullPage: true });
   return state;
 }
