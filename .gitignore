@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+.vercel/
+public/
+*.log
+
+# Brainstorming scratch files are local process notes, not submission artifacts.
+.superpowers/

@@ -1,0 +1,8 @@
+task mode: create
+primary deck-profile: product-platform
+secondary gates: engineering-platform
+required proof objects: data-source-to-AI-to-task architecture, demo closed loop, business value
+source requirements: IPM weekly meeting data, Feishu weekly reports, sanitized sample fields
+brand constraints: Chinese enterprise project-management style, no external logos
+QA gates: editable PPTX, rendered preview, Chinese copy, no overpromised production write-back
+known missing inputs: final team resume, final submission portal upload format

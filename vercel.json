@@ -1,0 +1,7 @@
+{
+  "buildCommand": "mkdir -p public && cp index.html public/index.html && cp -R demo public/demo",
+  "installCommand": "echo 'static demo: no install step'",
+  "outputDirectory": "public",
+  "cleanUrls": true,
+  "trailingSlash": false
+}

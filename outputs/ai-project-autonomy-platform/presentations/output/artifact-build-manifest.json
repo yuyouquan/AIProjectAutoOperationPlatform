@@ -1,0 +1,28 @@
+{
+  "output": "/Users/shswyuyouquan/Documents/work/AI黑客松/outputs/ai-project-autonomy-platform/presentations/output/ai-project-autonomy-platform-onepage.pptx",
+  "outputBytes": 17866,
+  "slideCount": 1,
+  "slideSize": {
+    "width": 1280,
+    "height": 720
+  },
+  "previewDir": "/Users/shswyuyouquan/Documents/work/AI黑客松/outputs/ai-project-autonomy-platform/presentations/preview",
+  "previewPaths": [
+    "/Users/shswyuyouquan/Documents/work/AI黑客松/outputs/ai-project-autonomy-platform/presentations/preview/slide-01.png"
+  ],
+  "layoutDir": "/Users/shswyuyouquan/Documents/work/AI黑客松/outputs/ai-project-autonomy-platform/presentations/layout",
+  "layoutResults": [
+    {
+      "layoutPath": "/Users/shswyuyouquan/Documents/work/AI黑客松/outputs/ai-project-autonomy-platform/presentations/layout/slide-01.layout.json"
+    }
+  ],
+  "contactSheet": "/Users/shswyuyouquan/Documents/work/AI黑客松/outputs/ai-project-autonomy-platform/presentations/preview/contact-sheet.png",
+  "slides": [
+    {
+      "index": 1,
+      "requestedSlideNumber": 1,
+      "modulePath": "/Users/shswyuyouquan/Documents/work/AI黑客松/outputs/ai-project-autonomy-platform/presentations/slides/slide-01.mjs",
+      "exportName": "slide01"
+    }
+  ]
+}

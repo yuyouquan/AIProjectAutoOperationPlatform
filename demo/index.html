@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI 项目自治运营平台 Demo 1.0</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="header-copy">
+        <p class="eyebrow">AI 黑客松 Demo 1.0</p>
+        <h1>AI 项目自治运营平台</h1>
+        <p class="subtitle">从多系统数据到风险识别、任务创建、跟踪闭环和管理汇报</p>
+        <div class="hero-metrics" id="hero-metrics"></div>
+      </div>
+      <aside class="ai-console" aria-label="AI 自治运行态">
+        <div class="console-status">
+          <span class="live-dot"></span>
+          <span>AI 任务自治引擎运行中</span>
+        </div>
+        <div class="console-grid">
+          <div><span>数据源</span><strong>4 类</strong></div>
+          <div><span>风险规则</span><strong>节点感知</strong></div>
+          <div><span>任务模式</span><strong>建议生成</strong></div>
+          <div><span>写回策略</span><strong>下一步集成</strong></div>
+        </div>
+        <div class="console-stream" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </aside>
+      <div class="header-actions">
+        <button class="ghost-button" id="copy-report-button" type="button">复制报告</button>
+        <a class="primary-button" href="#task-agent">查看 AI 任务</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="section-shell" id="source-overview">
+        <div class="section-title">
+          <p class="eyebrow">Step 1</p>
+          <h2>数据源总览</h2>
+          <p>AI 自动收集项目管理、缺陷、大数据、售后系统中的项目运行信号，先读后写，降低系统改造风险。</p>
+        </div>
+        <div class="source-grid" id="source-grid"></div>
+      </section>
+
+      <section class="section-shell" id="agent-flow">
+        <div class="section-title">
+          <p class="eyebrow">Step 2</p>
+          <h2>AI 推理链路</h2>
+          <p>把散落信号转成可追踪任务，关键是让评委看见 AI 为什么判断、如何生成、怎样闭环。</p>
+        </div>
+        <div class="agent-flow-layout">
+          <div class="agent-flow" id="agent-flow-list"></div>
+          <div class="ai-proof-panel">
+            <span class="badge ok">Demo 1.0 重点</span>
+            <h3>一条可信闭环，而不是单点报告生成</h3>
+            <p>当前 Demo 用本地样例数据证明：AI 可以基于项目节点识别风险，生成带证据和验收口径的任务，并同步到看板与周会摘要。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell" id="risk-radar">
+        <div class="section-title">
+          <p class="eyebrow">Step 3</p>
+          <h2>节点风险雷达</h2>
+          <p>选择项目后，AI 根据当前节点判断应该重点检查哪些风险，而不是把所有字段平铺给项目经理。</p>
+        </div>
+        <div class="project-layout">
+          <aside class="project-list" id="project-list"></aside>
+          <div class="project-detail">
+            <div class="project-summary" id="project-summary"></div>
+            <div class="rule-strip" id="node-rule-strip"></div>
+            <div class="risk-list" id="risk-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell" id="task-agent">
+        <div class="section-title">
+          <p class="eyebrow">Step 4</p>
+          <h2>AI 任务生成</h2>
+          <p>AI 将风险转成可执行任务，补齐责任部门、责任人、截止时间、验收口径和证据来源。</p>
+        </div>
+        <div class="task-table-wrap">
+          <table class="task-table">
+            <thead>
+              <tr>
+                <th>风险任务</th>
+                <th>等级</th>
+                <th>责任</th>
+                <th>截止</th>
+                <th>状态</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="task-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-shell" id="tracking-board">
+        <div class="section-title">
+          <p class="eyebrow">Step 5</p>
+          <h2>自治跟踪看板</h2>
+          <p>AI 持续跟踪 Open、Ongoing、升级、Closed 状态，对逾期或反复 Reopen 的风险自动生成催办建议。</p>
+        </div>
+        <div class="board" id="tracking-columns"></div>
+      </section>
+
+      <section class="section-shell" id="report-output">
+        <div class="section-title">
+          <p class="eyebrow">Step 6</p>
+          <h2>周会报告输出</h2>
+          <p>将手工收集、判断、催办、写报告的链路收敛为一个 AI 自动闭环。</p>
+        </div>
+        <div class="report-panel">
+          <div class="report-meta" id="report-meta"></div>
+          <pre id="report-text"></pre>
+        </div>
+      </section>
+
+      <section class="section-shell" id="contest-fit">
+        <div class="section-title">
+          <p class="eyebrow">评审适配</p>
+          <h2>参赛要求覆盖</h2>
+          <p>根据参赛指南，本次材料同时覆盖报名提交物、既有立项增量、业务价值和可落地性说明。</p>
+        </div>
+        <div class="fit-grid" id="contest-fit-grid"></div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="./data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
