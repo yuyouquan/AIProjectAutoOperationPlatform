@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AI 项目自治运营平台 Demo 1.0</title>
+    <title>AI 项目任务智能体工作台 Demo 2.0</title>
     <link rel="icon" href="data:,">
     <link id="demo-style" rel="stylesheet">
     <script>
@@ -32,190 +32,100 @@
     </script>
   </head>
   <body>
-    <header class="app-header">
-      <div class="header-copy">
-        <p class="eyebrow">AI 黑客松 Demo 1.0</p>
-        <h1>AI 项目自治运营平台</h1>
-        <p class="subtitle">从多系统数据到风险识别、任务创建、跟踪闭环和管理汇报</p>
-        <div class="hero-metrics" id="hero-metrics"></div>
-      </div>
-      <aside class="ai-console" aria-label="AI 自治运行态">
-        <div class="console-status">
-          <span class="live-dot"></span>
-          <span>AI 任务自治引擎运行中</span>
-        </div>
-        <div class="console-grid">
-          <div><span>数据源</span><strong>4 类</strong></div>
-          <div><span>风险规则</span><strong>节点感知</strong></div>
-          <div><span>任务模式</span><strong>建议生成</strong></div>
-          <div><span>写回策略</span><strong>下一步集成</strong></div>
-        </div>
-        <div class="console-stream" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </aside>
-      <div class="header-actions">
-        <button class="ghost-button" id="copy-report-button" type="button">复制报告</button>
-        <a class="ghost-button" href="#auto-runner">演示巡检</a>
-        <a class="primary-button" href="#task-agent">查看 AI 任务</a>
-      </div>
-    </header>
-
-    <main>
-      <section class="section-shell runner-shell" id="auto-runner">
-        <div class="runner-hero">
-          <div>
-            <p class="eyebrow">AI Agent Demo</p>
-            <h2>AI 自动巡检演示台</h2>
-            <p id="runner-subtitle">点击开始后，AI 会自动读取多系统数据、判断节点风险、生成任务并输出周会报告。</p>
+    <main class="workbench-page" id="workbench-root">
+      <section class="hero-band" aria-label="AI 项目任务智能体工作台">
+        <nav class="top-glass-bar">
+          <div class="brand-lockup">
+            <p class="eyebrow">AI 黑客松 Demo 2.0</p>
+            <h1>AI 项目任务智能体工作台</h1>
           </div>
-          <div class="runner-actions">
-            <button class="primary-run-button" id="start-auto-run" type="button">开始 AI 自动巡检</button>
-            <button class="secondary-run-button" id="reset-auto-run" type="button">重置演示</button>
-          </div>
-        </div>
 
-        <div class="runner-layout">
-          <div class="runner-console">
-            <div class="runner-status">
-              <span class="live-dot"></span>
-              <strong id="runner-status-text">等待启动</strong>
-              <span id="runner-progress-text">0 / 8</span>
-            </div>
-            <div class="runner-progress">
-              <span id="runner-progress-bar"></span>
-            </div>
-            <div class="runner-log" id="runner-log"></div>
-            <div class="feishu-output-card" id="feishu-output-card">
-              <div class="feishu-output-head">
-                <span class="badge" id="feishu-output-status">等待飞书文档输出</span>
-                <strong>飞书文档输出</strong>
-              </div>
-              <div class="feishu-doc-preview">
-                <div class="feishu-doc-meta" id="feishu-doc-meta"></div>
-                <h3 id="feishu-doc-title">等待 AI 生成项目周会文档</h3>
-                <div class="feishu-doc-blocks" id="feishu-doc-blocks"></div>
-              </div>
-              <div class="feishu-output-actions">
-                <button class="small-button" id="copy-feishu-doc-button" type="button">复制飞书文档正文</button>
-                <span>正式集成后可自动创建 / 更新飞书 Docx</span>
-              </div>
+          <label class="scenario-search" for="scenario-selector">
+            <span>方案输入</span>
+            <select id="scenario-selector" aria-label="选择演示项目场景"></select>
+          </label>
+
+          <div class="top-actions">
+            <button class="ghost-button" id="reset-demo" type="button">重置</button>
+            <button class="primary-button" id="start-ai-analysis" type="button">开始 AI 分析</button>
+          </div>
+        </nav>
+
+        <div class="hero-copy">
+          <p>把项目交付件、群聊、云文档和多系统原始数据，自动解析成风险、任务、催办和飞书周报。</p>
+          <div class="hero-metrics" id="hero-metrics"></div>
+        </div>
+      </section>
+
+      <section class="workbench-grid" aria-label="AI 项目自治运营工作台">
+        <aside class="glass-panel input-panel">
+          <div class="panel-title">
+            <span class="panel-index">01</span>
+            <div>
+              <p class="eyebrow">方案输入</p>
+              <h2>项目与原始信号</h2>
             </div>
           </div>
+          <div id="scenario-brief"></div>
+          <div class="source-cloud" id="source-cloud"></div>
+          <div class="dimension-grid" id="dimension-grid"></div>
+        </aside>
 
-          <aside class="runner-side">
-            <div class="runner-focus" id="runner-focus-card">
-              <span class="badge">待启动</span>
-              <h3>AI 将自动替项目经理跑一遍巡检流程</h3>
-              <p>启动后可看到每一步读取了什么系统、命中了什么规则、生成了哪些任务。</p>
+        <section class="glass-panel ai-panel">
+          <div class="panel-title">
+            <span class="panel-index">02</span>
+            <div>
+              <p class="eyebrow">智能体数据解析</p>
+              <h2>AI 思考过程</h2>
             </div>
-            <div class="runner-outcomes" id="runner-outcomes"></div>
-          </aside>
-        </div>
-
-        <div class="runner-generated">
-          <div>
-            <h3>AI 生成的任务草稿</h3>
-            <p>任务字段会随着巡检推进自动补齐，并同步到下方任务看板。</p>
           </div>
-          <div class="generated-task-grid" id="generated-task-grid"></div>
-        </div>
-      </section>
-
-      <section class="section-shell" id="source-overview">
-        <div class="section-title">
-          <p class="eyebrow">Step 1</p>
-          <h2>数据源总览</h2>
-          <p>AI 自动收集项目管理、缺陷、大数据、售后系统中的项目运行信号，先读后写，降低系统改造风险。</p>
-        </div>
-        <div class="source-grid" id="source-grid"></div>
-      </section>
-
-      <section class="section-shell" id="agent-flow">
-        <div class="section-title">
-          <p class="eyebrow">Step 2</p>
-          <h2>AI 推理链路</h2>
-          <p>把散落信号转成可追踪任务，关键是让评委看见 AI 为什么判断、如何生成、怎样闭环。</p>
-        </div>
-        <div class="agent-flow-layout">
-          <div class="agent-flow" id="agent-flow-list"></div>
-          <div class="ai-proof-panel">
-            <span class="badge ok">Demo 1.0 重点</span>
-            <h3>一条可信闭环，而不是单点报告生成</h3>
-            <p>当前 Demo 用本地样例数据证明：AI 可以基于项目节点识别风险，生成带证据和验收口径的任务，并同步到看板与周会摘要。</p>
+          <div class="ai-core">
+            <div class="orbital-core" aria-hidden="true"></div>
+            <div>
+              <strong id="ai-core-title">等待启动</strong>
+              <p id="ai-core-subtitle">点击开始后，AI 会按数据源、质量、进度、成本、节点风险逐步推理。</p>
+            </div>
           </div>
-        </div>
-      </section>
+          <div class="stage-list" id="ai-stage-list"></div>
+          <div class="thinking-feed" id="ai-thinking-feed"></div>
+        </section>
 
-      <section class="section-shell" id="risk-radar">
-        <div class="section-title">
-          <p class="eyebrow">Step 3</p>
-          <h2>节点风险雷达</h2>
-          <p>选择项目后，AI 根据当前节点判断应该重点检查哪些风险，而不是把所有字段平铺给项目经理。</p>
-        </div>
-        <div class="project-layout">
-          <aside class="project-list" id="project-list"></aside>
-          <div class="project-detail">
-            <div class="project-summary" id="project-summary"></div>
-            <div class="rule-strip" id="node-rule-strip"></div>
-            <div class="risk-list" id="risk-list"></div>
+        <aside class="glass-panel output-panel">
+          <div class="panel-title">
+            <span class="panel-index">03</span>
+            <div>
+              <p class="eyebrow">任务闭环中枢</p>
+              <h2>生成、分发、质检、预警</h2>
+            </div>
           </div>
-        </div>
+          <div class="task-distribution-panel" id="task-distribution-panel"></div>
+          <div class="deliverable-panel">
+            <div>
+              <strong>交付件质检</strong>
+              <p id="deliverable-status">等待责任人上传进展说明与交付件。</p>
+            </div>
+            <div class="deliverable-actions">
+              <button class="mini-button" id="deliverable-upload-button" type="button">一键上传</button>
+              <button class="mini-button danger" id="qa-reject-button" type="button">AI 建议打回</button>
+            </div>
+          </div>
+          <p class="output-hint">催办与上升预警</p>
+          <div class="escalation-feed" id="escalation-feed"></div>
+        </aside>
       </section>
 
-      <section class="section-shell" id="task-agent">
-        <div class="section-title">
-          <p class="eyebrow">Step 4</p>
-          <h2>AI 任务生成</h2>
-          <p>AI 将风险转成可执行任务，补齐责任部门、责任人、截止时间、验收口径和证据来源。</p>
-        </div>
-        <div class="task-table-wrap">
-          <table class="task-table">
-            <thead>
-              <tr>
-                <th>风险任务</th>
-                <th>等级</th>
-                <th>责任</th>
-                <th>截止</th>
-                <th>状态</th>
-                <th>操作</th>
-              </tr>
-            </thead>
-            <tbody id="task-table-body"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="section-shell" id="tracking-board">
-        <div class="section-title">
-          <p class="eyebrow">Step 5</p>
-          <h2>自治跟踪看板</h2>
-          <p>AI 持续跟踪 Open、Ongoing、升级、Closed 状态，对逾期或反复 Reopen 的风险自动生成催办建议。</p>
-        </div>
-        <div class="board" id="tracking-columns"></div>
-      </section>
-
-      <section class="section-shell" id="report-output">
-        <div class="section-title">
-          <p class="eyebrow">Step 6</p>
-          <h2>周会报告输出</h2>
-          <p>将手工收集、判断、催办、写报告的链路收敛为一个 AI 自动闭环。</p>
-        </div>
-        <div class="report-panel">
-          <div class="report-meta" id="report-meta"></div>
-          <pre id="report-text"></pre>
-        </div>
-      </section>
-
-      <section class="section-shell" id="contest-fit">
-        <div class="section-title">
-          <p class="eyebrow">评审适配</p>
-          <h2>参赛要求覆盖</h2>
-          <p>根据参赛指南，本次材料同时覆盖报名提交物、既有立项增量、业务价值和可落地性说明。</p>
-        </div>
-        <div class="fit-grid" id="contest-fit-grid"></div>
+      <section class="lower-grid">
+        <article class="glass-panel report-panel" id="feishu-doc-panel" aria-label="飞书文档输出"></article>
+        <article class="glass-panel fit-panel">
+          <div class="panel-title">
+            <span class="panel-index">04</span>
+            <div>
+              <p class="eyebrow">评审适配</p>
+              <h2>参赛要求覆盖</h2>
+            </div>
+          </div>
+          <div id="contest-fit-grid"></div>
+        </article>
       </section>
     </main>
 
