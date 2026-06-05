@@ -4,8 +4,8 @@ import vm from "node:vm";
 
 const root = process.cwd();
 const requiredFiles = ["index.html", "demo/index.html", "demo/styles.css", "demo/app.js", "demo/data.js"];
-const requiredText = ["AI 自动巡检演示台", "开始 AI 自动巡检", "飞书文档输出", "数据源总览", "AI 推理链路", "节点风险雷达", "AI 任务生成", "自治跟踪看板", "周会报告输出", "参赛要求覆盖"];
-const requiredDataKeys = ["projects", "sources", "summaryMetrics", "automationRun", "aiTrace", "risks", "issueSummary", "contestFit"];
+const requiredText = ["AI 项目任务智能体工作台", "方案输入", "智能体数据解析", "AI 思考过程", "任务闭环中枢", "交付件质检", "催办与上升预警", "飞书文档输出", "参赛要求覆盖"];
+const requiredDataKeys = ["summaryMetrics", "scenarios", "systemSources", "dimensions", "analysisStages", "taskLoop", "reportOutputs", "contestFit"];
 
 function fail(message) {
   console.error(message);
@@ -62,14 +62,6 @@ for (const key of requiredDataKeys) {
   }
 }
 
-if (!Array.isArray(demoData.projects) || demoData.projects.length < 3) {
-  fail("Expected at least 3 demo projects");
-}
-
-if (!Array.isArray(demoData.risks) || demoData.risks.length < 5) {
-  fail("Expected at least 5 demo risks");
-}
-
 const allChineseCopy = [
   html,
   fs.readFileSync(path.join(root, "demo/app.js"), "utf8"),
@@ -78,7 +70,7 @@ const allChineseCopy = [
 const appSource = fs.readFileSync(path.join(root, "demo/app.js"), "utf8");
 const cssSource = fs.readFileSync(path.join(root, "demo/styles.css"), "utf8");
 
-for (const text of ["AI 项目自治运营平台", "开始 AI 自动巡检", "原始数据解析", "解析结果", "AI 思考过程", "决策输出", "模拟写入任务系统", "模拟创建任务", "正式系统写回作为下一步集成", "既有立项增量", "业务价值", "可落地性"]) {
+for (const text of ["AI 项目任务智能体工作台", "开始 AI 分析", "原始数据", "解析结果", "AI 思考过程", "决策输出", "一键上传和分发", "交付件质检", "AI 建议打回", "催办与上升预警", "正式系统写回作为下一步集成", "既有立项增量", "业务价值", "可落地性"]) {
   if (!allChineseCopy.includes(text)) {
     fail(`Missing required Chinese copy: ${text}`);
   }
@@ -140,46 +132,52 @@ for (const cssText of ["backdrop-filter", "--glass", "--aqua", "workbench-grid",
   }
 }
 
-if (!Array.isArray(demoData.automationRun?.steps) || demoData.automationRun.steps.length < 7) {
-  fail("Expected at least 7 AI auto-inspection steps");
+if (!Array.isArray(demoData.scenarios) || demoData.scenarios.length < 2) {
+  fail("Expected at least 2 demo scenarios");
 }
 
-for (const step of demoData.automationRun.steps) {
-  for (const field of ["rawData", "parsedData", "thinking", "decision"]) {
+if (!Array.isArray(demoData.systemSources) || demoData.systemSources.length < 10) {
+  fail("Expected at least 10 system sources");
+}
+
+if (!Array.isArray(demoData.analysisStages) || demoData.analysisStages.length < 5) {
+  fail("Expected at least 5 AI analysis stages");
+}
+
+for (const step of demoData.analysisStages) {
+  for (const field of ["raw", "parsed", "thought", "decision"]) {
     if (!step[field] || typeof step[field] !== "string") {
-      fail(`Automation step ${step.id || step.title} is missing ${field}`);
+      fail(`Analysis stage ${step.id || step.title} is missing ${field}`);
     }
   }
 }
 
-if (html.includes("runner-thinking-card")) {
-  fail("AI thinking process should be embedded inside inspection task logs, not shown as a separate runner-thinking-card module");
+if (!Array.isArray(demoData.taskLoop?.tasks) || demoData.taskLoop.tasks.length < 4) {
+  fail("Expected at least 4 generated task candidates");
 }
 
-for (const logClass of ["log-thinking", "log-thinking-grid", "log-raw", "log-parsed", "log-reasoning", "log-decision"]) {
-  if (!appSource.includes(logClass)) {
-    fail(`Missing task-embedded AI thinking class in demo/app.js: ${logClass}`);
+if (!demoData.taskLoop?.qa?.uploaded || !demoData.taskLoop?.qa?.rejected) {
+  fail("Expected taskLoop.qa uploaded and rejected copy");
+}
+
+if (!Array.isArray(demoData.taskLoop?.escalations) || demoData.taskLoop.escalations.length < 3) {
+  fail("Expected at least 3 reminder/escalation messages");
+}
+
+if (!demoData.reportOutputs || !Array.isArray(demoData.reportOutputs.blocks) || demoData.reportOutputs.blocks.length < 5) {
+  fail("Expected reportOutputs with at least 5 Feishu report blocks");
+}
+
+for (const thinkingClass of ["thinking-feed", "thinking-card", "thinking-grid", "stage-card", "task-card", "doc-block"]) {
+  if (!appSource.includes(thinkingClass) && !cssSource.includes(thinkingClass)) {
+    fail(`Missing redesigned workbench class: ${thinkingClass}`);
   }
 }
 
-for (const domId of ["feishu-output-card", "feishu-output-status", "feishu-doc-title", "feishu-doc-blocks", "copy-feishu-doc-button"]) {
-  if (!html.includes(domId)) {
-    fail(`Missing Feishu document output DOM id: ${domId}`);
-  }
-}
-
-const stepMs = Number(appSource.match(/AUTO_RUN_STEP_MS\s*=\s*(\d+)/)?.[1] || 0);
-const completeMs = Number(appSource.match(/AUTO_RUN_COMPLETE_MS\s*=\s*(\d+)/)?.[1] || 0);
-if (stepMs < 1600 || completeMs < 900) {
-  fail(`AI auto-inspection timing is too fast for judge review: step=${stepMs}, complete=${completeMs}`);
-}
-
-if (!demoData.automationRun.feishuDocument || !Array.isArray(demoData.automationRun.feishuDocument.blocks) || demoData.automationRun.feishuDocument.blocks.length < 4) {
-  fail("Expected automationRun.feishuDocument with at least 4 report blocks");
-}
-
-if (!Array.isArray(demoData.aiTrace) || demoData.aiTrace.length < 5) {
-  fail("Expected at least 5 AI trace steps");
+const stepMs = Number(appSource.match(/STAGE_STEP_MS\s*=\s*(\d+)/)?.[1] || 0);
+const completeMs = Number(appSource.match(/STAGE_COMPLETE_MS\s*=\s*(\d+)/)?.[1] || 0);
+if (stepMs < 1700 || completeMs < 800) {
+  fail(`AI analysis timing is too fast for judge review: step=${stepMs}, complete=${completeMs}`);
 }
 
 if (!Array.isArray(demoData.contestFit) || demoData.contestFit.length < 5) {
